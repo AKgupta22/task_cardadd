@@ -3,6 +3,7 @@ import Login from '../components/Login/Login'
 import Signup from "../components/Signup/signup"
 import Home from "./Home"
 import "./App.css";
+import PrivateRoutes from "./PrivateRoutes";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<PrivateRoutes><Home /></PrivateRoutes>} />
       </Routes>
     </BrowserRouter>
   )

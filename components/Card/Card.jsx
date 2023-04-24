@@ -22,7 +22,7 @@ const Card = (props) => {
             <CardDetails
               updateCard={props.updateCard}
               onClose={setModalShow}
-              card={props.card}
+              card={props.card.find(item => item.id === props.id)}
               bid={props.bid}
               removeCard={props.removeCard}
             />

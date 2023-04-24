@@ -121,8 +121,17 @@ function Home() {
     setData(dragCardInBoard(source, destination));
   };
 
-  const updateCard = (bid, cid, card) => {
-    console.log(card[0].id);
+  const updateCard = async (board, cid, data) => {
+    try {
+      await Axios.patch(`/api/tasks/task/${cid}/`, {
+        task_description: data,
+        board: board
+      })
+      fetchData()
+    }
+    catch (e) {
+
+    }
   };
 
   return (

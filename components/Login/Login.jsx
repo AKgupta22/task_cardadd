@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './login.css'
 import { Link, useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
@@ -10,6 +10,10 @@ function Login() {
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
+
+    useEffect(() => {
+        localStorage.clear()
+    }, [])
 
     const handleRequest = async (data) => {
         setIsLoading(true)

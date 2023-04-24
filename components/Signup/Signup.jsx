@@ -10,6 +10,10 @@ function Signup() {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
+  useEffect(() => {
+    localStorage.clear()
+  }, [])
+
   const handleRequest = async (data) => {
     setIsLoading(true)
     setError('')

@@ -110,171 +110,40 @@ export default function CardDetails(props) {
     };
   });
   useEffect(() => {
-    if (props.updateCard) props.updateCard(props.bid, values.id, values);
+    if (props.updateCard) props.updateCard(values.board, values?.id);
   }, [values]);
+
+  const [editData, setEditData] = useState(values.task_description)
+
+
+  const handleEdit = async (e) => {
+    e.preventDefault()
+    await props.updateCard(values.board, values.id, editData)
+    props.onClose(false)
+  }
 
   return (
     <Modal onClose={props.onClose}>
       <div className="local__bootstrap">
+        <form className="w-75 m-auto mt-2 mb-2" onSubmit={handleEdit}>
+          <div className="mb-2">
+            <label className="form-label">Card name</label>
+            <input type="text" required className="form-control" onChange={(e) => setEditData(e.target.value)} value={editData} placeholder="enter card name" />
+          </div>
+          <div className="text-center">
+            <button type="submit" className="btn btn-sm w-25 btn-primary">Edit</button>
+          </div>
+        </form>
         <div
           className="container d-flex justify-content-center my-4"
-          style={{ minWidth: "650px" }}
+          style={{ minWidth: "400px" }}
         >
-          {/* <div className="row pb-4"> */}
-          {/* <div className="col-12">
-              <div className="d-flex align-items-center pt-3 gap-2">
-                <CreditCard className="icon__md" />
-                {input ? (
-                  <Input title={values.title} />
-                ) : (
-                  <h5
-                    style={{ cursor: "pointer" }}
-                    onClick={() => setInput(true)}
-                  >
-                    {values.title}
-                  </h5>
-                )}
-              </div>
-            </div> */}
-          {/* </div> */}
-          {/* <div className="row"> */}
-          {/* <div className="col-8"> */}
-          {/* <h6 className="text-justify">Label</h6> */}
-          {/* <div
-                className="d-flex label__color flex-wrap"
-                style={{ width: "500px", paddingRight: "10px" }}
-              >
-                {values.tags.length !== 0 ? (
-                  values.tags.map((item) => (
-                    <span
-                      className="d-flex justify-content-between align-items-center gap-2"
-                      style={{ backgroundColor: item.color }}
-                    >
-                      {item.tagName.length > 10
-                        ? item.tagName.slice(0, 6) + "..."
-                        : item.tagName}
-                      <X
-                        onClick={() => removeTag(item.id)}
-                        style={{ width: "15px", height: "15px" }}
-                      />
-                    </span>
-                  ))
-                ) : (
-                  <span
-                    style={{ color: "#ccc" }}
-                    className="d-flex justify-content-between align-items-center gap-2"
-                  >
-                    <i> No Labels</i>
-                  </span>
-                )}
-              </div> */}
-          {/* <div className="check__list mt-2">
-                <div className="d-flex align-items-end  justify-content-between">
-                  <div className="d-flex align-items-center gap-2">
-                    <CheckSquare className="icon__md" />
-                    <h6>Check List</h6>
-                  </div>
-                  <div className="card__action__btn">
-                    <button onClick={() => deleteAllTask()}>
-                      Delete all tasks
-                    </button>
-                  </div>
-                </div>
-                <div className="progress__bar mt-2 mb-2">
-                  <div className="progress flex-1">
-                    <div
-                      class="progress-bar"
-                      role="progressbar"
-                      style={{ width: calculatePercent() + "%" }}
-                      aria-valuenow="75"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    >
-                      {calculatePercent() + "%"}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="my-2">
-                  {values.task.length !== 0 ? (
-                    values.task.map((item, index) => (
-                      <div className="task__list d-flex align-items-start gap-2">
-                        <input
-                          className="task__checkbox"
-                          type="checkbox"
-                          defaultChecked={item.completed}
-                          onChange={() => {
-                            updateTask(item.id);
-                          }}
-                        />
-
-                        <h6
-                          className={`flex-grow-1 ${
-                            item.completed === true ? "strike-through" : ""
-                          }`}
-                        >
-                          {item.task}
-                        </h6>
-                        <Trash
-                          onClick={() => {
-                            removeTask(item.id);
-                          }}
-                          style={{
-                            cursor: "pointer",
-                            widht: "18px",
-                            height: "18px",
-                          }}
-                        />
-                      </div>
-                    ))
-                  ) : (
-                    <></>
-                  )}
-
-                  <Editable
-                    parentClass={"task__editable"}
-                    name={"Add Task"}
-                    btnName={"Add task"}
-                    onSubmit={addTask}
-                  />
-                </div>
-              </div> */}
-
-
-
-          {/* </div> */}
-          {/* <div className="col-4"> */}
-          {/* <h6>Add to card</h6>
-              <div className="d-flex card__action__btn flex-column gap-2">
-                <button onClick={() => setLabelShow(true)}>
-                  <span className="icon__sm">
-                    <Tag />
-                  </span>
-                  Add Label
-                </button>
-                {labelShow && (
-                  <Label
-                    color={colors}
-                    addTag={addTag}
-                    tags={values.tags}
-                    onClose={setLabelShow}
-                  />
-                )} */}
-          {/* <button>
-                  <span className="icon__sm">
-                    <Clock />
-                  </span>
-                  Date
-                </button> */}
-
-          <button onClick={() => props.removeCard(props.bid, values[0].id)} className="btn__div">
-            <span className="icon__sm  ">
-              <Trash className=""/>
-            </span>
-            <span>Delete Card</span>
+          <button onClick={() => {
+            props.removeCard(values.board, values.id),
+              props.onClose(false)
+          }} className="btn btn-danger">
+            <Trash className="" /> Delete Card
           </button>
-          {/* </div> */}
-          {/* </div> */}
         </div>
       </div>
     </Modal>
